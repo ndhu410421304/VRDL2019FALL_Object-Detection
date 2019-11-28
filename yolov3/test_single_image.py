@@ -68,7 +68,7 @@ with tf.Session() as sess:
         img = img[np.newaxis, :] / 255.
         with tf.device('/gpu:0'):
             boxes_, scores_, labels_ = sess.run([boxes, scores, labels], feed_dict={input_data: img})
-            labels_ = np.where(labels_==0, 10, labels_)  
+            labels_ = np.where(labels_==0, 10, labels_)  # replace the label from 0 to 10
 
         # rescale the coordinates to the original image
         if args.letterbox_resize:
