@@ -35,8 +35,8 @@ parser.add_argument("--restore_path", type=str, default="./data/darknet_weights/
                     help="The path of the weights to restore.")
 args = parser.parse_args()
 
-args.anchors = parse_anchors(args.anchor_path)
-args.classes = read_class_names(args.class_name_path)
+args.anchors = parse_anchors(args.anchor_path)  # load from anchor file
+args.classes = read_class_names(args.class_name_path)  #name file
 args.num_class = len(args.classes)  # calculate total classes
 
 # color use to visualize result

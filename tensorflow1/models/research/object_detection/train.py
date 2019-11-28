@@ -98,7 +98,7 @@ def main(_):
       tf.gfile.Copy(FLAGS.pipeline_config_path,
                     os.path.join(FLAGS.train_dir, 'pipeline.config'),
                     overwrite=True)
-  else:
+  else:  # readconfig files
     configs = config_util.get_configs_from_multiple_files(
         model_config_path=FLAGS.model_config_path,
         train_config_path=FLAGS.train_config_path,
@@ -119,7 +119,7 @@ def main(_):
       model_config=model_config,
       is_training=True)
 
-  def get_next(config):
+  def get_next(config):  # read input datasequentially
     return dataset_util.make_initializable_iterator(
         dataset_builder.build(config)).get_next()
 
@@ -167,7 +167,7 @@ def main(_):
     graph_rewriter_fn = graph_rewriter_builder.build(
         configs['graph_rewriter_config'], is_training=True)
 
-  trainer.train(
+  trainer.train(  # call trainer to train the model
       create_input_dict_fn,
       model_fn,
       train_config,

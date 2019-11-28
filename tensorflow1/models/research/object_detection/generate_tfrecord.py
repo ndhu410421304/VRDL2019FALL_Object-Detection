@@ -68,6 +68,7 @@ def create_tf_example(group, path):
     image = Image.open(encoded_jpg_io)
     width, height = image.size
 
+    # save annotations:order xmin xmax ymin ymax
     filename = group.filename.encode('utf8')
     image_format = b'jpg'
     xmins = []
