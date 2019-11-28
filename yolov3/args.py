@@ -7,26 +7,26 @@ from utils.misc_utils import parse_anchors, read_class_names
 import math
 
 ### Some paths
-train_file = './data/my_data/train.txt'  # The path of the training txt file.
-val_file = './data/my_data/val.txt'  # The path of the validation txt file.
+train_file = './train.txt'  # The path of the training txt file.
+val_file = './val.txt'  # The path of the validation txt file.
 restore_path = './data/darknet_weights/yolov3.ckpt'  # The path of the weights to restore.
 save_dir = './checkpoint/'  # The directory of the weights to save.
 log_dir = './data/logs/'  # The directory to store the tensorboard log files.
 progress_log_path = './data/progress.log'  # The path to record the training progress.
 anchor_path = './data/yolo_anchors.txt'  # The path of the anchor txt file.
-class_name_path = './data/coco.names'  # The path of the class names.
+class_name_path = './data/data.names'  # The path of the class names.
 
 ### Training releated numbers
 batch_size = 6
-img_size = [416, 416]  # Images will be resized to `img_size` and fed to the network, size format: [width, height]
+img_size = [64, 64]  # Images will be resized to `img_size` and fed to the network, size format: [width, height]
 letterbox_resize = True  # Whether to use the letterbox resize, i.e., keep the original aspect ratio in the resized image.
 total_epoches = 100
 train_evaluation_step = 100  # Evaluate on the training batch after some steps.
-val_evaluation_epoch = 2  # Evaluate on the whole validation dataset after some epochs. Set to None to evaluate every epoch.
-save_epoch = 10  # Save the model after some epochs.
+val_evaluation_epoch = 5  # Evaluate on the whole validation dataset after some epochs. Set to None to evaluate every epoch.
+save_epoch = 5  # Save the model after some epochs.
 batch_norm_decay = 0.99  # decay in bn ops
 weight_decay = 5e-4  # l2 weight decay
-global_step = 0  # used when resuming training
+global_step = 115959  # used when resuming training
 
 ### tf.data parameters
 num_threads = 10  # Number of threads for image processing used in tf.data pipeline.
@@ -54,7 +54,8 @@ pw_values = [learning_rate_init, 3e-5, 1e-5]
 # restore_exclude = None
 # choise 2: restore all layers except the last 3 conv2d layers in 3 scale
 restore_include = None
-restore_exclude = ['yolov3/yolov3_head/Conv_14', 'yolov3/yolov3_head/Conv_6', 'yolov3/yolov3_head/Conv_22']
+#restore_exclude = ['yolov3/yolov3_head/Conv_14', 'yolov3/yolov3_head/Conv_6', 'yolov3/yolov3_head/Conv_22']
+restore_exclude = None
 # Choose the parts you want to finetune. List form.
 # Set to None to train the whole model.
 update_part = ['yolov3/yolov3_head']
