@@ -36,7 +36,6 @@ from utils import visualization_utils as vis_util
 # Name of the directory containing the object detection module we're using
 MODEL_NAME = 'inference_graph'
 
-
 # Grab path to current working directory
 CWD_PATH = os.getcwd()
 
@@ -87,13 +86,14 @@ detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
 # Number of objects detected
 num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
+# locate in test file folder
 os.chdir("test")
 img_list = os.listdir()
 total_img = len(img_list)
 print(total_img)
 
 j_data = []
-Qtime = time.time()
+cur_time = time.time()
 for i in range(13068):
     # Load image using OpenCV and
     # expand image dimensions to have shape: [1, None, None, 3]
@@ -105,6 +105,7 @@ for i in range(13068):
 
     # Perform the actual detection by running the model with the image as input
     
+    # Use gpu to acccelerate prediction
     with tf.device('/gpu:0'):
         (boxes, scores, classes, num) = sess.run(
         [detection_boxes, detection_scores, detection_classes, num_detections],
@@ -123,6 +124,7 @@ for i in range(13068):
         line_thickness=8,
         min_score_thresh=0.60)
 
+    # Save the data to generate jsonfile after all the prediction done.
     print(i)
     print(b_bbox_arr, qlabel_arr, qacc_arr)
     data = {}
@@ -134,7 +136,7 @@ for i in range(13068):
 with open('data.txt', 'w') as outfile:
     json.dump(j_data, outfile)
 # remeber to take the file out!!!
-Ftime = (time.time() - Qtime) / 13068
+Ftime = (time.time() - cur_time) / 13068
 print("TimeUse: " + str(Ftime))
 
 """

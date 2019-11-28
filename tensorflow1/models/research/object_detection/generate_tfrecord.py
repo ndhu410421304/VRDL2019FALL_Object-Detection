@@ -28,6 +28,8 @@ FLAGS = flags.FLAGS
 
 
 # TO-DO replace this with label map
+# label = what you want to see
+# id = what program would use to train
 def class_text_to_int(row_label):
     if row_label == '1':
         return 1
